@@ -3,12 +3,12 @@ package solutions
 import (
 	"sort"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 // Day10 solution
 func (h *Handler) Day10() (int, int) {
-	pzl := util.ReadIntPuzzleInput("10")
+	pzl := shared.ReadInput("2020", "10").IntLines("\n")
 	sort.Ints(pzl)
 	target := pzl[len(pzl)-1] + 3
 	pzl = append(pzl, target)

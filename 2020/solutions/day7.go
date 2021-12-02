@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 type d7bags map[string]map[string]int
@@ -12,7 +12,7 @@ type d7rbags map[string][]string
 
 // Day7 solution
 func (h *Handler) Day7() (int, int) {
-	pzl := util.ReadPuzzleInput("7", "\n")
+	pzl := shared.ReadInput("2020", "7").StringLines("\n")
 	bags, rbags := d7bags{}, d7rbags{}
 	parentRe := regexp.MustCompile(`(.+) bags contain`)
 	childrenRe := regexp.MustCompile(`(\d+) (.+?) bag`)

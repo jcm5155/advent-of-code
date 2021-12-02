@@ -3,14 +3,14 @@ package solutions
 import (
 	"image"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 type d11seats map[image.Point]rune
 
 // Day11 solution
 func (h *Handler) Day11() (int, int) {
-	pzl := util.ReadPuzzleInput("11", "\n")
+	pzl := shared.ReadInput("2020", "11").StringLines("\n")
 	var seats = make(d11seats)
 	for y := range pzl {
 		for x := range pzl[0] {

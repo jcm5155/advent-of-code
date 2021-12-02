@@ -1,19 +1,12 @@
 package solutions
 
 import (
-	"strconv"
-
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 // Day1 solution
 func (h *Handler) Day1() (int, int) {
-	p := util.ReadPuzzleInput("1", "\n")
-	pzl := []int{}
-	for _, i := range p {
-		j, _ := strconv.Atoi(i)
-		pzl = append(pzl, j)
-	}
+	pzl := shared.ReadInput("2020", "1").IntLines("\n")
 
 	p1, p2 := 0, 0
 	p1Found, p2Found := false, false

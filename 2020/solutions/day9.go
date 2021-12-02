@@ -3,12 +3,12 @@ package solutions
 import (
 	"sort"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 // Day9 solution
 func (h *Handler) Day9() (int, int) {
-	pzl := util.ReadIntPuzzleInput("9")
+	pzl := shared.ReadInput("2020", "9").IntLines("\n")
 	var c = make(chan int, 2)
 	p1 := d9p1(pzl, c)
 

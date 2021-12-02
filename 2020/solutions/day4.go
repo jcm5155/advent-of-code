@@ -4,7 +4,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 var d4Fields = map[string]*regexp.Regexp{
@@ -19,7 +19,7 @@ var d4Fields = map[string]*regexp.Regexp{
 
 // Day4 solution
 func (h *Handler) Day4() (int, int) {
-	pzl := util.ReadPuzzleInput("4", "\n\n")
+	pzl := shared.ReadInput("2020", "4").StringLines("\n\n")
 	p1, p2 := 0, 0
 	for _, passport := range pzl {
 		fullPP := strings.Fields(passport)

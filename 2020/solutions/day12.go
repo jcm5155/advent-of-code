@@ -5,12 +5,12 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 // Day12 solution
 func (h *Handler) Day12() (float64, float64) {
-	pzl := util.ReadPuzzleInput("12", "\n")
+	pzl := shared.ReadInput("2020", "12").StringLines("\n")
 	head, heading := map[int]byte{0: 'N', 90: 'E', 180: 'S', 270: 'W'}, 90
 	s1, s2, wp := image.Point{}, image.Point{}, image.Point{10, 1}
 	var c = make(chan image.Point, 1)

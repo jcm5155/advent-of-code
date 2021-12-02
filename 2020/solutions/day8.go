@@ -3,14 +3,14 @@ package solutions
 import (
 	"strconv"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 type d8visited map[int]bool
 
 // Day8 solution
 func (h *Handler) Day8() (int, int) {
-	pzl := util.ReadPuzzleInput("8", "\n")
+	pzl := shared.ReadInput("2020", "8").StringLines("\n")
 	c := make(chan int, 1)
 	p1 := d8resolveTimeline(pzl, c, 0, 0, d8visited{}, true, pzl[0])
 	p2 := <-c

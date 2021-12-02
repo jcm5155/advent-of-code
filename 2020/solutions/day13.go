@@ -10,12 +10,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 // Day13 solution
 func (h *Handler) Day13() (int, int) {
-	pzl := util.ReadPuzzleInput("13", "\n")
+	pzl := shared.ReadInput("2020", "13").StringLines("\n")
 	target, _ := strconv.ParseFloat(pzl[0], 64)
 	busIDs := strings.Split(pzl[1], ",")
 	var c = make(chan int)

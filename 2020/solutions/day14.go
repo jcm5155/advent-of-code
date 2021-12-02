@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 // Day14 solution
 func (h *Handler) Day14() (int64, int) {
-	pzl := util.ReadPuzzleInput("14", "\n")
+	pzl := shared.ReadInput("2020", "14").StringLines("\n")
 	r := regexp.MustCompile(`^mem\[(\d+)\] = (\d+)$`)
 	var mem = make(map[int][]byte)
 	var mask string

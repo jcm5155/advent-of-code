@@ -1,12 +1,12 @@
 package solutions
 
 import (
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 // Day3 solution
 func (h *Handler) Day3() (int, int) {
-	pzl := util.ReadPuzzleInput("3", "\n")
+	pzl := shared.ReadInput("2020", "3").StringLines("\n")
 	return d3(pzl)
 }
 

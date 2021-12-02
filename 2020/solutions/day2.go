@@ -4,12 +4,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code-2020/util"
+	"github.com/jcm5155/advent-of-code/shared"
 )
 
 // Day2 solution
 func (h *Handler) Day2() (int, int) {
-	pzl := util.ReadPuzzleInput("2", "\n")
+	pzl := shared.ReadInput("2020", "2").StringLines("\n")
 	p1, p2 := 0, 0
 	for _, i := range pzl {
 		minVal, maxVal, val, pass := d2Process(i)
