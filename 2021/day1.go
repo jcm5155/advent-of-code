@@ -1,11 +1,11 @@
-package solutions
+package aoc_2021
 
 import (
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 func (h *Handler) Day1() (int, int) {
-	pzl := shared.ReadInput("2021", "1").IntLines("\n")
+	pzl := common.ReadInput("2021", "1").IntLines("\n")
 	var p1, p2 int
 
 	p2bounds := len(pzl) - 3

@@ -1,3 +1,3 @@
-package solutions
+package aoc_2021
 
 type Handler struct{}

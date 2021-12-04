@@ -1,16 +1,16 @@
-package solutions
+package aoc_2020
 
 import (
 	"image"
 	"math"
 	"strconv"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 // Day12 solution
 func (h *Handler) Day12() (float64, float64) {
-	pzl := shared.ReadInput("2020", "12").StringLines("\n")
+	pzl := common.ReadInput("2020", "12").StringLines("\n")
 	head, heading := map[int]byte{0: 'N', 90: 'E', 180: 'S', 270: 'W'}, 90
 	s1, s2, wp := image.Point{}, image.Point{}, image.Point{10, 1}
 	var c = make(chan image.Point, 1)

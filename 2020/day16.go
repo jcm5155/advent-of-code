@@ -1,21 +1,21 @@
-package solutions
+package aoc_2020
 
 import (
 	"regexp"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 // Day16 solution
 func (h *Handler) Day16() (int, int) {
-	p := shared.ReadInput("2020", "16").StringLines("\n\n")
+	p := common.ReadInput("2020", "16").StringLines("\n\n")
 	paramRegex := regexp.MustCompile(`(.*?): (\d+)-(\d+) or (\d+)-(\d+)`)
 	var bounds []int
 	departures := [6][]int{}
 	for idx, row := range strings.Split(p[0], "\n") {
 		matches := paramRegex.FindStringSubmatch(row)
-		toCheck := shared.ArrAtoi(matches[2:])
+		toCheck := common.SliceAtoi(matches[2:])
 		if idx == 0 {
 			bounds = toCheck
 		} else {
@@ -34,7 +34,7 @@ func (h *Handler) Day16() (int, int) {
 	validTickets := [][]int{}
 	for _, row := range strings.Split(p[2], "\n")[1:] {
 		valid := true
-		nums := shared.ArrAtoi(strings.Split(row, ","))
+		nums := common.SliceAtoi(strings.Split(row, ","))
 		for _, n := range nums {
 			if n < bounds[0] || n > bounds[3] {
 				p1 += n
@@ -46,7 +46,7 @@ func (h *Handler) Day16() (int, int) {
 		}
 	}
 
-	myTicket := shared.ArrAtoi(strings.Split(strings.Split(p[1], "\n")[1], ","))
+	myTicket := common.SliceAtoi(strings.Split(strings.Split(p[1], "\n")[1], ","))
 	validTickets = append(validTickets, myTicket)
 
 	p2 := 1

@@ -1,4 +1,4 @@
-package shared
+package common
 
 import (
 	"fmt"
@@ -7,12 +7,8 @@ import (
 	"strings"
 )
 
-const (
-	puzzleInputFileExtension = ".input"
-)
-
 func ReadInput(year, day string) *PuzzleInput {
-	fullpath := fmt.Sprintf("./%v/inputs/day%v%v", year, day, puzzleInputFileExtension)
+	fullpath := fmt.Sprintf("./%v/inputs/day%v.input", year, day)
 	pzl, err := ioutil.ReadFile(filepath.FromSlash(fullpath))
 	if err != nil {
 		panic(err)
@@ -33,5 +29,9 @@ func (p *PuzzleInput) StringLines(sep string) []string {
 }
 
 func (p *PuzzleInput) IntLines(sep string) []int {
-	return ArrAtoi(p.StringLines(sep))
+	return SliceAtoi(p.StringLines(sep))
+}
+
+func (p *PuzzleInput) UintLines(sep string) []uint {
+	return SliceAtoUint(p.StringLines(sep))
 }

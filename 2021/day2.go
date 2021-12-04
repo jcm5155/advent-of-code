@@ -1,14 +1,14 @@
-package solutions
+package aoc_2021
 
 import (
 	"strconv"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 func (h *Handler) Day2() (int, int) {
-	pzl := shared.ReadInput("2021", "2").StringLines("\n")
+	pzl := common.ReadInput("2021", "2").StringLines("\n")
 	var p1H, p1D, p2H, p2D, aim int
 	for _, row := range pzl {
 		fields := strings.Fields(row)

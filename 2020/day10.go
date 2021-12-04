@@ -1,14 +1,14 @@
-package solutions
+package aoc_2020
 
 import (
 	"sort"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 // Day10 solution
 func (h *Handler) Day10() (int, int) {
-	pzl := shared.ReadInput("2020", "10").IntLines("\n")
+	pzl := common.ReadInput("2020", "10").IntLines("\n")
 	sort.Ints(pzl)
 	target := pzl[len(pzl)-1] + 3
 	pzl = append(pzl, target)

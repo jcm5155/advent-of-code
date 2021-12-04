@@ -1,14 +1,14 @@
-package solutions
+package aoc_2020
 
 import (
 	"sort"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 // Day9 solution
 func (h *Handler) Day9() (int, int) {
-	pzl := shared.ReadInput("2020", "9").IntLines("\n")
+	pzl := common.ReadInput("2020", "9").IntLines("\n")
 	var c = make(chan int, 2)
 	p1 := d9p1(pzl, c)
 

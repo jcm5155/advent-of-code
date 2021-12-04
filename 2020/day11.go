@@ -1,16 +1,16 @@
-package solutions
+package aoc_2020
 
 import (
 	"image"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 type d11seats map[image.Point]rune
 
 // Day11 solution
 func (h *Handler) Day11() (int, int) {
-	pzl := shared.ReadInput("2020", "11").StringLines("\n")
+	pzl := common.ReadInput("2020", "11").StringLines("\n")
 	var seats = make(d11seats)
 	for y := range pzl {
 		for x := range pzl[0] {

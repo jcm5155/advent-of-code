@@ -6,4 +6,4 @@ My solutions for Advent of Code.
 * 2021 - Go
 
 ### Usage
-* Go: `go run cmd/main.go [year] [...day]`
+* Go: `go run cmd/main.go <year> <day> ...`

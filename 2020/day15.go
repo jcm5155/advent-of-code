@@ -1,4 +1,4 @@
-package solutions
+package aoc_2020
 
 // Day15 solution
 func (h *Handler) Day15() (uint32, uint32) {

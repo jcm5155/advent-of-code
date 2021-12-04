@@ -1,16 +1,16 @@
-package solutions
+package aoc_2020
 
 import (
 	"strconv"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 type d8visited map[int]bool
 
 // Day8 solution
 func (h *Handler) Day8() (int, int) {
-	pzl := shared.ReadInput("2020", "8").StringLines("\n")
+	pzl := common.ReadInput("2020", "8").StringLines("\n")
 	c := make(chan int, 1)
 	p1 := d8resolveTimeline(pzl, c, 0, 0, d8visited{}, true, pzl[0])
 	p2 := <-c

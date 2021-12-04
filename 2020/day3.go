@@ -1,12 +1,12 @@
-package solutions
+package aoc_2020
 
 import (
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 // Day3 solution
 func (h *Handler) Day3() (int, int) {
-	pzl := shared.ReadInput("2020", "3").StringLines("\n")
+	pzl := common.ReadInput("2020", "3").StringLines("\n")
 	return d3(pzl)
 }
 

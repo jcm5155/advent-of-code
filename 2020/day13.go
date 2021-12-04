@@ -1,4 +1,4 @@
-package solutions
+package aoc_2020
 
 import (
 	"fmt"
@@ -10,12 +10,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 // Day13 solution
 func (h *Handler) Day13() (int, int) {
-	pzl := shared.ReadInput("2020", "13").StringLines("\n")
+	pzl := common.ReadInput("2020", "13").StringLines("\n")
 	target, _ := strconv.ParseFloat(pzl[0], 64)
 	busIDs := strings.Split(pzl[1], ",")
 	var c = make(chan int)

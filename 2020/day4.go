@@ -1,10 +1,10 @@
-package solutions
+package aoc_2020
 
 import (
 	"regexp"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 var d4Fields = map[string]*regexp.Regexp{
@@ -19,7 +19,7 @@ var d4Fields = map[string]*regexp.Regexp{
 
 // Day4 solution
 func (h *Handler) Day4() (int, int) {
-	pzl := shared.ReadInput("2020", "4").StringLines("\n\n")
+	pzl := common.ReadInput("2020", "4").StringLines("\n\n")
 	p1, p2 := 0, 0
 	for _, passport := range pzl {
 		fullPP := strings.Fields(passport)

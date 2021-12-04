@@ -1,4 +1,4 @@
-package solutions
+package aoc_2020
 
 import (
 	"fmt"
@@ -6,12 +6,12 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/jcm5155/advent-of-code/shared"
+	"github.com/jcm5155/advent-of-code/common"
 )
 
 // Day14 solution
 func (h *Handler) Day14() (int64, int) {
-	pzl := shared.ReadInput("2020", "14").StringLines("\n")
+	pzl := common.ReadInput("2020", "14").StringLines("\n")
 	r := regexp.MustCompile(`^mem\[(\d+)\] = (\d+)$`)
 	var mem = make(map[int][]byte)
 	var mask string
