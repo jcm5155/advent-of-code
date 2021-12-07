@@ -2,6 +2,7 @@ package aoc_2021
 
 import (
 	"github.com/jcm5155/advent-of-code/common"
+	
 	"strings"
 	"sync"
 )
