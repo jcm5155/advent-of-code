@@ -25,3 +25,11 @@ func SliceAtoUint(s []string) []uint {
 	}
 	return output
 }
+
+func SliceSum(s []int) int {
+	var output int
+	for _, item := range s {
+		output += item
+	}
+	return output
+}
