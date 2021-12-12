@@ -16,6 +16,18 @@ func SliceAtoi(s []string) []int {
 	return output
 }
 
+func SliceAtoFloat64(s []string) []float64 {
+	var output []float64
+	for _, i := range s {
+		n, err := strconv.ParseFloat(i, 64)
+		if err != nil {
+			panic(err)
+		}
+		output = append(output, n)
+	}
+	return output
+}
+
 func SliceAtoUint(s []string) []uint {
 	var output []uint
 	bitSize := len(s[0])

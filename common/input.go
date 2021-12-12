@@ -35,3 +35,7 @@ func (p *PuzzleInput) IntLines(sep string) []int {
 func (p *PuzzleInput) UintLines(sep string) []uint {
 	return SliceAtoUint(p.StringLines(sep))
 }
+
+func (p *PuzzleInput) Float64Lines(sep string) []float64 {
+	return SliceAtoFloat64(p.StringLines(sep))
+}
