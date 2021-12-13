@@ -1,4 +1,4 @@
-package aoc_2021
+package aoc_{{ .Year }}
 
 import aoc "github.com/jcm5155/advent-of-code/common"
 
