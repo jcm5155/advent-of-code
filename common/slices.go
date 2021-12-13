@@ -45,3 +45,30 @@ func SliceSum(s []int) int {
 	}
 	return output
 }
+
+func SliceAny(s []bool) bool {
+	for _, item := range s {
+		if item {
+			return true
+		}
+	}
+	return false
+}
+
+func SliceAll(s []bool) bool {
+	for _, item := range s {
+		if !item {
+			return false
+		}
+	}
+	return true
+}
+
+func SliceNone(s []bool) bool {
+	for _, item := range s {
+		if item {
+			return false
+		}
+	}
+	return true
+}

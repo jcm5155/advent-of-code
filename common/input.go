@@ -21,7 +21,7 @@ type PuzzleInput struct {
 }
 
 func (p *PuzzleInput) String() string {
-	return string(p.bytes)
+	return strings.TrimSuffix(string(p.bytes), "\n")
 }
 
 func (p *PuzzleInput) StringLines(sep string) []string {
