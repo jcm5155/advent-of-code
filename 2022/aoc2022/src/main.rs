@@ -5,6 +5,6 @@ mod inputs;
 
 
 fn main() {
-    let (p1, p2) = solutions::day4();
+    let (p1, p2) = solutions::day5();
     println!("{p1}\n{p2}");
 }

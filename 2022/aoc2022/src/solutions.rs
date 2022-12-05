@@ -3,41 +3,108 @@ use regex::Regex;
 use crate::inputs;
 
 
-pub fn day5() -> (i32, i32) {
-    let pzl = inputs::read("day4.txt");
-    let (mut p1, mut p2) = (0, 0);
+pub fn day5() -> (String, String) {
+    let pzl = inputs::read("day5");
+    let sections: Vec<&str> = pzl.split("\n\n").collect();
 
+    let mut stacks: Vec<Vec<char>> = vec![Vec::new()];
+    let mut stacks2: Vec<Vec<char>> = vec![Vec::new()];
 
+    // dumb pre-initialize stacks
+    for c in sections[0].split("\n").last().unwrap().chars() {
+        if c.is_numeric() {
+            stacks.push(Vec::new());
+            stacks2.push(Vec::new());
+        }
+    }
+
+    // populate initial positions
+    for line in sections[0].split("\n") {
+        let mut idx: usize = 0;
+        let mut col: usize = 1;
+
+        while idx < line.len() {
+            let current_char = line.chars().nth(idx + 1).unwrap();
+            if current_char.is_alphabetic() {
+                stacks[col].push(current_char);
+                stacks2[col].push(current_char);
+            }
+            idx += 4;
+            col += 1;
+        }
+    }
+
+    // reverse input stacks
+    for i in 0..stacks.len() {
+        stacks[i].reverse();
+        stacks2[i].reverse();
+    }
+
+    // do the stuff
+    let re = Regex::new(r"^move (\d+) from (\d) to (\d)$").unwrap();
+    for instruction in sections[1].lines() {
+        let cap = match re.captures(instruction) {
+            Some(c) => c,
+            _ => continue,
+        };
+
+        let move_amount = cap[1].parse::<usize>().unwrap();
+        let from = cap[2].parse::<usize>().unwrap();
+        let to = cap[3].parse::<usize>().unwrap();
+
+        // part 1
+        for _ in 0..move_amount {
+            let val = stacks[from].pop().unwrap();
+            stacks[to].push(val);
+        }
+
+        // part 2
+        let stacks2_len = stacks2[from].len();
+        let mut bulk_move: Vec<char> = stacks2[from].drain(stacks2_len - move_amount..).collect();
+        stacks2[to].append(&mut bulk_move);
+    }
+
+    // part 1
+    let p1: String = stacks[1..stacks.len()]
+        .iter()
+        .map(|m| *m.last().unwrap())
+        .collect();
+
+    // part 2
+    let p2: String = stacks2[1..stacks2.len()]
+        .iter()
+        .map(|m| *m.last().unwrap())
+        .collect();
 
     return (p1, p2);
 }
 
 
 pub fn day4() -> (i32, i32) {
-    let pzl = inputs::read("day4.txt");
+    let pzl = inputs::read("day4");
     let (mut p1, mut p2) = (0, 0);
 
     let re = Regex::new(r"^(\d+)-(\d+),(\d+)-(\d+)$").unwrap();
 
     for line in pzl.split("\n") {
-        for cap in re.captures(line) {
-            let left_min = &cap[1].parse::<i32>().unwrap();
-            let left_max = &cap[2].parse::<i32>().unwrap();
-            let right_min = &cap[3].parse::<i32>().unwrap();
-            let right_max = &cap[4].parse::<i32>().unwrap();
+        let cap = re.captures(line).unwrap();
+        let left_min = &cap[1].parse::<i32>().unwrap();
+        let left_max = &cap[2].parse::<i32>().unwrap();
+        let right_min = &cap[3].parse::<i32>().unwrap();
+        let right_max = &cap[4].parse::<i32>().unwrap();
 
-            // part 1
-            if (left_min >= right_min && left_max <= right_max) ||
-                (right_min >= left_min && right_max <= left_max) {
-                p1 += 1;
-            }
-
-            // part 2
-            if (left_min <= right_min && left_max >= right_min) ||
-                (right_min <= left_min && right_max >= left_min) {
-                p2 += 1;
-            }
+        // part 1
+        if (left_min >= right_min && left_max <= right_max) ||
+            (right_min >= left_min && right_max <= left_max) {
+            p1 += 1;
         }
+
+        // part 2
+        if (left_min <= right_min && left_max >= right_min) ||
+            (right_min <= left_min && right_max >= left_min) {
+            p2 += 1;
+        }
+
     }
 
     return (p1, p2);
@@ -45,7 +112,7 @@ pub fn day4() -> (i32, i32) {
 
 
 pub fn day3() -> (i32, i32) {
-    let pzl = inputs::read("day3.txt");
+    let pzl = inputs::read("day3");
     let (mut p1, mut p2) = (0, 0);
 
     let mut current_bag_idx = 0;
@@ -98,7 +165,7 @@ pub fn day3() -> (i32, i32) {
 
 
 pub fn day2() -> (i32, i32) {
-    let pzl = inputs::read("day2.txt");
+    let pzl = inputs::read("day2");
     let (mut p1, mut p2) = (0, 0);
 
     const ROCK: char = 'A';
@@ -162,7 +229,7 @@ pub fn day2() -> (i32, i32) {
 
 
 pub fn day1() -> (i32, i32) {
-    let pzl = inputs::read("day1.txt");
+    let pzl = inputs::read("day1");
     let mut elf_total_calories: Vec<i32> = Vec::new();
 
     for elf_backpack in pzl.split("\n\n") {
