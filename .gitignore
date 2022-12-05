@@ -1,5 +1,6 @@
 *.input
 main
+*.txt
 
 # Created by https://www.toptal.com/developers/gitignore/api/macos,windows,python,go,visualstudiocode,intellij+all
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,windows,python,go,visualstudiocode,intellij+all
