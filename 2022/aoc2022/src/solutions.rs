@@ -2,6 +2,33 @@ use std::collections::{HashMap, HashSet};
 use regex::Regex;
 use crate::inputs;
 
+pub fn day7() -> (i32, i32) {
+    let (mut p1, mut p2) = (0, 0);
+
+
+    return (p1, p2);
+}
+
+pub fn day6() -> (usize, usize) {
+    let pzl: Vec<char> = inputs::read("day6").chars().collect();
+
+    let mut p1 = 4;
+    while p1 < pzl.len() {
+        let hs: HashSet<char> = pzl[p1-4..p1].iter().cloned().collect();
+        if hs.len() == 4 { break; }
+        p1 += 1
+    }
+
+    let mut p2: usize = 14 + p1;
+    while p2 < pzl.len() {
+        let hs: HashSet<char> = pzl[p2-14..p2].iter().cloned().collect();
+        if hs.len() == 14 { break; }
+        p2 += 1
+    }
+
+    return (p1, p2);
+}
+
 
 pub fn day5() -> (String, String) {
     let pzl = inputs::read("day5");
