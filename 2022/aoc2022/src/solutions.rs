@@ -1,13 +1,78 @@
 use std::collections::{HashMap, HashSet};
+use std::path::{Path, PathBuf};
 use regex::Regex;
 use crate::inputs;
 
 pub fn day7() -> (i32, i32) {
-    let (mut p1, mut p2) = (0, 0);
+    let pzl = inputs::read("day7");
+    let mut directories: HashMap<PathBuf, i32> = HashMap::new();
+    let mut current_directory = PathBuf::new();
 
+    for line in pzl.split("\n") {
+        if line.starts_with("$ cd ") {
+            let next_directory = line
+                .split(" ")
+                .nth(2)
+                .unwrap();
+
+            if next_directory == ".." {
+                current_directory.pop();
+            } else {
+                current_directory.push(next_directory);
+                directories.insert(current_directory.clone(), 0);
+            }
+        } else {
+            let file_size = match line.split(" ").nth(0).unwrap().parse::<i32>() {
+                Ok(n) => n,
+                _ => continue,
+            };
+
+            directories
+                .entry(current_directory.clone())
+                .and_modify( |v: &mut i32| *v += file_size);
+        }
+    }
+
+    let mut directory_paths = directories
+        .keys()
+        .cloned()
+        .collect::<Vec<PathBuf>>();
+
+    // sort path names by how many "/" they contain (descending order)
+    // to guarantee that children are fully calculated before being added to parent
+    directory_paths.sort_by(|a, b|
+        b.to_str().unwrap().matches("/").count().cmp(
+            &a.to_str().unwrap().matches("/").count()));
+
+    // add each directory's file size to its direct parent's file size
+    for path_buf in directory_paths {
+        match path_buf.parent() {
+            Some(parent) => {
+                let file_size = *directories.get(&path_buf).unwrap();
+                directories.entry(parent.to_path_buf()).and_modify( |v: &mut i32| *v += file_size);
+            }
+            _ => continue,
+        }
+    }
+
+    let all_files_size = *directories.get(Path::new("/")).unwrap();
+    let p2_target_file_size = 30000000 - (70000000 - all_files_size);
+
+    let (mut p1, mut p2) = (0, i32::MAX);
+    for (_, v) in &directories {
+
+        if *v <= 100000 {
+            p1 += v;
+        }
+
+        if *v >= p2_target_file_size && v < &p2 {
+            p2 = *v;
+        }
+    }
 
     return (p1, p2);
 }
+
 
 pub fn day6() -> (usize, usize) {
     let pzl: Vec<char> = inputs::read("day6").chars().collect();
@@ -34,10 +99,10 @@ pub fn day5() -> (String, String) {
     let pzl = inputs::read("day5");
     let sections: Vec<&str> = pzl.split("\n\n").collect();
 
-    let mut stacks: Vec<Vec<char>> = vec![Vec::new()];
-    let mut stacks2: Vec<Vec<char>> = vec![Vec::new()];
+    let mut stacks: Vec<Vec<char>> = Vec::new();
+    let mut stacks2: Vec<Vec<char>> = Vec::new();
 
-    // dumb pre-initialize stacks
+    // look at the last row of the diagram to find how many Vec<char> to init
     for c in sections[0].split("\n").last().unwrap().chars() {
         if c.is_numeric() {
             stacks.push(Vec::new());
@@ -46,9 +111,10 @@ pub fn day5() -> (String, String) {
     }
 
     // populate initial positions
-    for line in sections[0].split("\n") {
+    let diagram: Vec<&str> = sections[0].split("\n").collect();
+    for line in diagram.iter().rev() {
         let mut idx: usize = 0;
-        let mut col: usize = 1;
+        let mut col: usize = 0;
 
         while idx < line.len() {
             let current_char = line.chars().nth(idx + 1).unwrap();
@@ -61,12 +127,6 @@ pub fn day5() -> (String, String) {
         }
     }
 
-    // reverse input stacks
-    for i in 0..stacks.len() {
-        stacks[i].reverse();
-        stacks2[i].reverse();
-    }
-
     // do the stuff
     let re = Regex::new(r"^move (\d+) from (\d) to (\d)$").unwrap();
     for instruction in sections[1].lines() {
@@ -76,8 +136,8 @@ pub fn day5() -> (String, String) {
         };
 
         let move_amount = cap[1].parse::<usize>().unwrap();
-        let from = cap[2].parse::<usize>().unwrap();
-        let to = cap[3].parse::<usize>().unwrap();
+        let from = cap[2].parse::<usize>().unwrap() - 1;
+        let to = cap[3].parse::<usize>().unwrap() - 1;
 
         // part 1
         for _ in 0..move_amount {
@@ -91,14 +151,12 @@ pub fn day5() -> (String, String) {
         stacks2[to].append(&mut bulk_move);
     }
 
-    // part 1
-    let p1: String = stacks[1..stacks.len()]
+    let p1: String = stacks
         .iter()
         .map(|m| *m.last().unwrap())
         .collect();
 
-    // part 2
-    let p2: String = stacks2[1..stacks2.len()]
+    let p2: String = stacks2
         .iter()
         .map(|m| *m.last().unwrap())
         .collect();
@@ -209,15 +267,15 @@ pub fn day2() -> (i32, i32) {
         score: i32,
     }
 
-    const rock: Attack = Attack{name: ROCK, beats: SCISSORS, loses_to: PAPER, score: 1};
-    const paper: Attack = Attack{name: PAPER, beats: ROCK, loses_to: SCISSORS, score: 2};
-    const scissors: Attack = Attack{name: SCISSORS, beats: PAPER, loses_to: ROCK, score: 3};
+    const ATTACK_ROCK: Attack = Attack{name: ROCK, beats: SCISSORS, loses_to: PAPER, score: 1};
+    const ATTACK_PAPER: Attack = Attack{name: PAPER, beats: ROCK, loses_to: SCISSORS, score: 2};
+    const ATTACK_SCISSORS: Attack = Attack{name: SCISSORS, beats: PAPER, loses_to: ROCK, score: 3};
 
     let get_attack = | name | -> Attack {
         match name {
-            ROCK | ROCK_OR_LOSE => rock,
-            PAPER | PAPER_OR_DRAW => paper,
-            SCISSORS | SCISSORS_OR_WIN => scissors,
+            ROCK | ROCK_OR_LOSE => ATTACK_ROCK,
+            PAPER | PAPER_OR_DRAW => ATTACK_PAPER,
+            SCISSORS | SCISSORS_OR_WIN => ATTACK_SCISSORS,
             _ => panic!("unknown attack"),
         }
     };
