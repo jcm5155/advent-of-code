@@ -11,45 +11,35 @@ pub fn day10() -> (i32, i32) {
     const LIGHT: char = '#';
 
     let mut instructions: VecDeque<(i32, i32)> = VecDeque::new();
-    pzl.lines()
-        .for_each(|line|
-            instructions.push_back(match line {
-                "noop" => (1, 0),
-                _ => (2, line.split(" ")
-                    .nth(1).unwrap()
-                    .parse::<i32>().unwrap())
-            }));
+    pzl.lines().for_each(|line|
+        instructions.push_back(match line {
+            "noop" => (1, 0),
+            _ => (2, line.split(" ").nth(1).unwrap().parse::<i32>().unwrap()),
+        }));
 
-    let mut register: i32 = 1;
+    let mut register = 1;
     let mut cycle_count = 0;
     let mut signal_strength = 0;
     let mut screen: Vec<char> = vec![DARK; 40*6];
 
     loop {
         match instructions.pop_front() {
-            Some((processing_time, add_amt)) => {
-                for _ in 0..processing_time {
+            Some((next_op, amt)) => {
+                for _ in 0..next_op {
                     // part 2
-                    let relative_pos = cycle_count % 40;
-                    for i in register - 1..register + 2 {
-                        if relative_pos == i {
-                            screen[cycle_count as usize] = LIGHT;
-                            break;
-                        }
+                    if (register - 1..register + 2).contains(&(cycle_count % 40)) {
+                        screen[cycle_count as usize] = LIGHT;
                     }
 
                     cycle_count += 1;
 
                     // part 1
                     match cycle_count {
-                        20 | 60 | 100 | 140 | 180 | 220  => {
-                            let add_val = cycle_count * register;
-                            signal_strength += add_val;
-                        },
+                        20 | 60 | 100 | 140 | 180 | 220  => signal_strength += cycle_count * register,
                         _ => ()
                     }
                 }
-                register += add_amt;
+                register += amt;
             }
             None => break,
         }
