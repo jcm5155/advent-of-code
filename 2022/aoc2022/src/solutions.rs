@@ -1,7 +1,71 @@
-use std::collections::{HashMap, HashSet};
+use std::collections::{HashMap, HashSet, VecDeque};
 use std::path::{Path, PathBuf};
 use regex::Regex;
 use crate::inputs;
+
+
+pub fn day10() -> (i32, i32) {
+    let pzl = inputs::read("day10");
+
+    const DARK: char = ' ';
+    const LIGHT: char = '#';
+
+    let mut instructions: VecDeque<(i32, i32)> = VecDeque::new();
+    pzl.lines()
+        .for_each(|line|
+            instructions.push_back(match line {
+                "noop" => (1, 0),
+                _ => (2, line.split(" ")
+                    .nth(1).unwrap()
+                    .parse::<i32>().unwrap())
+            }));
+
+    let mut register: i32 = 1;
+    let mut cycle_count = 0;
+    let mut signal_strength = 0;
+    let mut screen: Vec<char> = vec![DARK; 40*6];
+
+    loop {
+        match instructions.pop_front() {
+            Some((processing_time, add_amt)) => {
+                for _ in 0..processing_time {
+                    // part 2
+                    let relative_pos = cycle_count % 40;
+                    for i in register - 1..register + 2 {
+                        if relative_pos == i {
+                            screen[cycle_count as usize] = LIGHT;
+                            break;
+                        }
+                    }
+
+                    cycle_count += 1;
+
+                    // part 1
+                    match cycle_count {
+                        20 | 60 | 100 | 140 | 180 | 220  => {
+                            let add_val = cycle_count * register;
+                            signal_strength += add_val;
+                        },
+                        _ => ()
+                    }
+                }
+                register += add_amt;
+            }
+            None => break,
+        }
+    }
+
+    for (i, pixel) in screen.iter().enumerate() {
+        if i % 40 == 0 {
+            println!();
+        }
+        print!("{}", pixel);
+    }
+    println!();
+
+    return (signal_strength, -1);
+}
+
 
 pub fn day9() -> (i32, i32) {
     let pzl = inputs::read("day9");
