@@ -2,6 +2,7 @@
 main
 *.txt
 aoc2022/.idea/
+.idea/
 
 # Created by https://www.toptal.com/developers/gitignore/api/go,rust,macos,python,windows,intellij+all,visualstudiocode
 # Edit at https://www.toptal.com/developers/gitignore?templates=go,rust,macos,python,windows,intellij+all,visualstudiocode

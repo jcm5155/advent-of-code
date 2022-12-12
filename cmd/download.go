@@ -11,17 +11,39 @@ import (
 )
 
 const (
-	inputUrl     = "https://adventofcode.com/%v/day/%v/input"
+	inputUrl         = "https://adventofcode.com/%v/day/%v/input"
+	templateFilePath = "common/templates/day.%v.tmpl"
+
+	// go
 	downloadPath = "./%v/inputs/day%v.input"
 	solutionPath = "./%v/day%v.go"
+
+	// rust
+	rustSolutionPath = "./aoc%v/src/bin/%v.rs"
+	rustDownloadPath = "./aoc%v/src/bin/inputs/%v.input"
 )
 
 func main() {
-	year := flag.String("y", "2021", "year")
+	year := flag.String("y", "2022", "year")
 	day := flag.String("d", "1", "day")
+	language := flag.String("l", "rust", "language")
 	flag.Parse()
+
+	var downloadLoc, solutionLoc, templateFile string
+	switch *language {
+	case "go":
+		downloadLoc = downloadPath
+		solutionLoc = solutionPath
+		templateFile = fmt.Sprintf(templateFilePath, "go")
+	case "rust", "rs":
+		downloadLoc = rustDownloadPath
+		solutionLoc = rustSolutionPath
+		templateFile = fmt.Sprintf(templateFilePath, "rs")
+	default:
+		panic("language not found")
+	}
 	fullUrl := fmt.Sprintf(inputUrl, *year, *day)
-	savepath := fmt.Sprintf(downloadPath, *year, *day)
+	savepath := fmt.Sprintf(downloadLoc, *year, *day)
 
 	// check if .input already exists
 	_, err := os.Open(savepath)
@@ -48,12 +70,12 @@ func main() {
 	io.Copy(savefile, res.Body)
 	fmt.Printf("created %v!\n", savepath)
 
-	// create .go file
-	sfn := fmt.Sprintf(solutionPath, *year, *day)
+	// create solution file
+	sfn := fmt.Sprintf(solutionLoc, *year, *day)
 	_, err = os.Open(sfn)
 	if err != nil {
 		solutionFile, _ := os.Create(sfn)
-		tmpl, _ := template.ParseFiles("common/templates/day.tpl")
+		tmpl, _ := template.ParseFiles(templateFile)
 		_ = tmpl.Execute(solutionFile, map[string]interface{}{
 			"Day":  day,
 			"Year": year,
