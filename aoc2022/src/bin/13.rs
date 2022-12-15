@@ -4,7 +4,7 @@ mod inputs;
 
 fn main() {
     let pzl = inputs::read("test");
-    // let pzl = inputs::read("{{ .Day }}");
+    // let pzl = inputs::read("13");
     let (p1, p2) = (0, 0);
 
 
