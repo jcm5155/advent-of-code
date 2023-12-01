@@ -24,7 +24,7 @@ const (
 )
 
 func main() {
-	year := flag.String("y", "2022", "year")
+	year := flag.String("y", "2023", "year")
 	day := flag.String("d", "1", "day")
 	language := flag.String("l", "rust", "language")
 	flag.Parse()

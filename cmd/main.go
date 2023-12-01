@@ -6,6 +6,7 @@ import (
 
 	aoc_2020 "github.com/jcm5155/advent-of-code/2020"
 	aoc_2021 "github.com/jcm5155/advent-of-code/2021"
+	aoc_2023 "github.com/jcm5155/advent-of-code/2023"
 	"github.com/jcm5155/advent-of-code/common"
 )
 
@@ -15,6 +16,8 @@ func main() {
 
 	var solver interface{}
 	switch year {
+	case "2023":
+		solver = &aoc_2023.Handler{}
 	case "2021":
 		solver = &aoc_2021.Handler{}
 	case "2020":

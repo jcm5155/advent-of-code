@@ -2,14 +2,14 @@ package common
 
 import (
 	"fmt"
-	"io/ioutil"
+	"os"
 	"path/filepath"
 	"strings"
 )
 
 func ReadInput(year, day string) *PuzzleInput {
 	fullpath := fmt.Sprintf("./%v/inputs/day%v.input", year, day)
-	pzl, err := ioutil.ReadFile(filepath.FromSlash(fullpath))
+	pzl, err := os.ReadFile(filepath.FromSlash(fullpath))
 	if err != nil {
 		panic(err)
 	}
