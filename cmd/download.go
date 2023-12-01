@@ -26,7 +26,7 @@ const (
 func main() {
 	year := flag.String("y", "2023", "year")
 	day := flag.String("d", "1", "day")
-	language := flag.String("l", "rust", "language")
+	language := flag.String("l", "go", "language")
 	flag.Parse()
 
 	var downloadLoc, solutionLoc, templateFile string

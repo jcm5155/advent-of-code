@@ -26,10 +26,8 @@ func d1p1(pzl *aoc.PuzzleInput) int {
 			if unicode.IsDigit(r) {
 				if first == 0 {
 					first = r
-					last = r
-				} else {
-					last = r
 				}
+				last = r
 			}
 		}
 
@@ -73,6 +71,7 @@ func d1p2(pzl *aoc.PuzzleInput) int {
 		"oneight", "oneeight",
 		"twone", "twoone",
 		"threeight", "threeeight",
+		"fiveight", "fiveeight",
 		"sevenine", "sevennine",
 		"eightwo", "eighttwo",
 		"eighthree", "eightthree",
