@@ -15,7 +15,8 @@ func (h *Handler) Day4() (int, int) {
 
 	for idx, row := range pzl {
 		for _, m := range gameRegex.FindAllStringSubmatch(row, -1) {
-			var points int
+			// do this first to account for initial ticket
+			ticketCounts[idx] += 1
 
 			// dumb set (empty struct takes 0 bytes)
 			var winnerSet = make(map[string]struct{})
@@ -23,9 +24,7 @@ func (h *Handler) Day4() (int, int) {
 				winnerSet[f] = struct{}{}
 			}
 
-			// do this first to account for initial ticket
-			ticketCounts[idx] += 1
-
+			var points int
 			addTicketOffset := 1
 			for _, possibleWinner := range strings.Fields(m[2]) {
 				if _, ok := winnerSet[possibleWinner]; ok {
