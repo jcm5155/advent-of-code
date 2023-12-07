@@ -38,10 +38,8 @@ func d6p1(pzl []string) int {
 }
 
 func d6p2(pzl []string) int {
-	ts := strings.Join(strings.Fields(pzl[0])[1:], "")
-	ds := strings.Join(strings.Fields(pzl[1])[1:], "")
-	time, _ := strconv.Atoi(ts)
-	recordDistance, _ := strconv.Atoi(ds)
+	time, _ := strconv.Atoi(strings.Join(strings.Fields(pzl[0])[1:], ""))
+	recordDistance, _ := strconv.Atoi(strings.Join(strings.Fields(pzl[1])[1:], ""))
 	return d6_solveRace(time, recordDistance)
 }
 
