@@ -1,9 +1,10 @@
 package aoc_2023
 
 import (
-	aoc "github.com/jcm5155/advent-of-code/common"
 	"strconv"
 	"strings"
+
+	aoc "github.com/jcm5155/advent-of-code/common"
 )
 
 func (h *Handler) Day5() (int, int) {
