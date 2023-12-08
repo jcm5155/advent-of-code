@@ -1,6 +1,7 @@
 package aoc_2023
 
 import (
+	"cmp"
 	"fmt"
 	"slices"
 	"strconv"
@@ -53,6 +54,25 @@ type d7_Hand struct {
 	Cards []int
 	Bet   int
 	Type  d7_Type
+}
+
+func d7_newHand(cardStr []string, bet int, isPartTwo bool) *d7_Hand {
+	var handMap = make(map[string]int)
+	var cards = make([]int, 5)
+	for _, card := range cardStr {
+		cardValue := d7_getCardValue[card]
+		if isPartTwo && card == "J" {
+			cardValue = 1
+		}
+		cards = append(cards, cardValue)
+		handMap[card]++
+	}
+
+	return &d7_Hand{
+		Cards: cards,
+		Bet:   bet,
+		Type:  d7_getHandType(handMap, isPartTwo),
+	}
 }
 
 func d7_getHandType(handMap map[string]int, isPartTwo bool) d7_Type {
@@ -132,44 +152,16 @@ func d7_getHandType(handMap map[string]int, isPartTwo bool) d7_Type {
 	return handType
 }
 
-func d7_newHand(cardStr []string, bet int, isPartTwo bool) *d7_Hand {
-	var handMap = make(map[string]int)
-	var cards = make([]int, 5)
-	for _, card := range cardStr {
-		cardValue := d7_getCardValue[card]
-		if isPartTwo && card == "J" {
-			cardValue = 1
-		}
-		cards = append(cards, cardValue)
-		handMap[card]++
-	}
-
-	return &d7_Hand{
-		Cards: cards,
-		Bet:   bet,
-		Type:  d7_getHandType(handMap, isPartTwo),
-	}
-}
-
 func d7_compareHands(hand *d7_Hand, other *d7_Hand) int {
 	if hand.Type != other.Type {
-		if hand.Type > other.Type {
-			return 1
-		}
-		return -1
+		return cmp.Compare(hand.Type, other.Type)
 	}
 
 	for idx, card := range hand.Cards {
 		otherCard := other.Cards[idx]
-
-		if card == otherCard {
-			continue
+		if card != otherCard {
+			return cmp.Compare(card, otherCard)
 		}
-
-		if card > otherCard {
-			return 1
-		}
-		break
 	}
 	return -1
 }
