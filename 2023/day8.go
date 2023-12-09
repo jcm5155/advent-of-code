@@ -50,8 +50,7 @@ func d8p2(instructions string) int {
 
 	var stepCounts = make([]int, len(paths))
 	for idx, p := range paths {
-		currentNode := p
-		stepCounts[idx] = d8_solvePath(currentNode, instructions, true)
+		stepCounts[idx] = d8_solvePath(p, instructions, true)
 	}
 
 	return aoc.LCM(stepCounts...)
